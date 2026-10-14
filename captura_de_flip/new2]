@@ -1,0 +1,39 @@
+import requests
+from PIL import Image
+from io import BytesIO
+import os
+
+links = [
+    "https://online.fliphtml5.com/pawvg/nymd/files/large/6be1997cd9e9575b0b57cdb733903e05.webp?1791580825",
+    "https://online.fliphtml5.com/pawvg/nymd/files/large/99e24a3b045910e5e26f7eb09fe53690.webp?1791580825",
+    "https://online.fliphtml5.com/pawvg/nymd/files/large/dc36960333863dc8eacfd8460d343ff3.webp?1791580825",
+    "https://online.fliphtml5.com/pawvg/nymd/files/large/d6a299e634c485a4efad86da83c34362.webp?1791580825",
+    "https://online.fliphtml5.com/pawvg/nymd/files/large/170e8f1f2b7a7c5c439601bf9cef771a.webp?1791580825",
+    "https://online.fliphtml5.com/pawvg/nymd/files/large/edf8063cffcb0445df402a21bded68b0.webp?1791580825",
+    "https://online.fliphtml5.com/pawvg/nymd/files/large/cf60266d5fd0bb4dfeabe71c3399a5a4.webp?1791580825",
+    "https://online.fliphtml5.com/pawvg/nymd/files/large/67645d7d4786a270eeacd69c2e930880.webp?1791580825"
+]
+
+# Pasta onde as imagens serão salvas
+pasta = "imagens"
+
+# Cria a pasta automaticamente, caso não exista
+os.makedirs(pasta, exist_ok=True)
+
+for i, url in enumerate(links, start=1):
+    try:
+        response = requests.get(url, timeout=30)
+        response.raise_for_status()
+
+        imagem = BytesIO(response.content)
+        image = Image.open(imagem).convert("RGB")
+
+        nome_arquivo = os.path.join(pasta, f"{i:03d}.png")
+        image.save(nome_arquivo, "PNG")
+
+        print(f"Página {i} baixada: {nome_arquivo}")
+
+    except Exception as e:
+        print(f"Erro ao baixar a página {i}: {e}")
+
+print("Download concluído!")

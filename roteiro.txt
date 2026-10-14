@@ -1,0 +1,34 @@
+Pega página
+https://investidorinstitucional.com.br/edicoes-anteriores-em-pdf/
+    |
+Login
+https://investidorinstitucional.com.br/assinante-login
+    ihcaction	"login"
+    ihc_login_nonce	"ed1593d76b"
+    log	"secretaria@fabricadeideias.com"
+    pwd	"F@brica*2026"
+        fundo de pensao taiwan
+    |
+encontra a edicao/oes
+"http://investidorinstitucional.com.br/wp-content/uploads/2026/08/institucional_389_completa-02.pdf"
+"http://investidorinstitucional.com.br/wp-content/uploads/2026/08/institucional_388_completa-02.pdf" e encontra
+    |
+Encontra todos os FB3D_CLIENT_DATA
+    |
+for: pega uma edição
+    |
+Decodifica Base64
+    |
+Converte JSON
+    |
+Pega o post
+    |
+Descobre o número real da edição
+    |
+Pega URL do PDF
+    |
+Baixa
+    |
+Salva como edicao_NÚMERO.pdf
+    |
+volta para o próximo

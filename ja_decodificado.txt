@@ -1,0 +1,19 @@
+{
+  "posts": {
+    "57512": {
+      "ID": 57512,
+      "title": "Edição 389",
+      "type": "pdf",
+      "data": {
+        "post_ID": "57546",
+        "guid": "http://investidorinstitucional.com.br/wp-content/uploads/2026/08/institucional_389_completa-02.pdf",
+        "pdf_pages": "60",
+        "pages_customization": "none"
+      },
+      "post_name": "edicao-389",
+      "post_type": "3d-flip-book"
+    }
+  },
+  "pages": [],
+  "firstPages": []
+}

@@ -1,0 +1,65 @@
+<?php
+
+$url_pagina = "https://investidorinstitucional.com.br/edicoes-anteriores-em-pdf/";
+
+$html = file_get_contents($url_pagina);
+
+$padrao = "/FB3D_CLIENT_DATA\.push\('([^']+)'\)/";
+
+preg_match_all($padrao, $html, $dados);
+
+$ultima_edicao = null;
+$maior_numero = 0;
+
+foreach ($dados[1] as $codigo) {
+
+    $decodificado = base64_decode($codigo);
+
+    $json_data = json_decode($decodificado, true);
+
+    if (!isset($json_data["posts"])) {
+        continue;
+    }
+
+    foreach ($json_data["posts"] as $post) {
+
+        $titulo = $post["title"];
+
+        if (preg_match('/Edição\s+(\d+)/i', $titulo, $numero)) {
+            $numero_edicao = (int) $numero[1];
+
+            if ($numero_edicao > $maior_numero) {
+                $maior_numero = $numero_edicao;
+                $ultima_edicao = $post;
+            }
+        }
+    }
+}
+
+
+if ($ultima_edicao === null) {
+    sai("Nenhuma edição encontrada.\n");
+}
+
+
+$titulo = $ultima_edicao["title"];
+
+$pdf_url = $ultima_edicao["data"]["guid"];
+
+
+echo "Última edição encontrada: $titulo\n";
+echo "URL: $pdf_url\n";
+
+
+$pdf = file_get_contents($pdf_url);
+
+if ($pdf === false) {
+    sai("Erro ao baixar o PDF.\n");
+}
+
+
+file_put_contents("$titulo.pdf", $pdf);
+
+echo "Baixado: $titulo.pdf\n";
+
+?>

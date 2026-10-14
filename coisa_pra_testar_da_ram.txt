@@ -1,0 +1,11 @@
+3. Conflito de Perfil de Velocidade (XMP na BIOS)
+Se a sua memória antiga tiver uma frequência (ex: 2666MHz) e a nova tiver outra (ex: 3200MHz), ou se a BIOS estava configurada para forçar uma velocidade mais alta no pente antigo, o computador desliga por segurança ao tentar aplicar essa velocidade na memória nova.
+• O que fazer para testar:
+	1. Deixe apenas o pente antigo no PC e ligue-o.
+	2. Fique apertando a tecla Delete assim que ligar para entrar na BIOS.
+	3. Procure por uma opção chamada XMP (ou eXtreme Memory Profile) e mude para Disabled (Desativado). Salve e saia.
+	4. Desligue o PC, coloque o pente novo no slot correto e tente ligar. Desativar o XMP força as duas memórias a trabalharem na velocidade padrão segura e idêntica.
+
+
+
+

@@ -1,0 +1,54 @@
+import requests
+from pathlib import Path
+from PIL import Image
+from io import BytesIO
+import time
+
+ARQUIVO_URLS = Path("recursos_paginas.txt")
+PASTA = Path("imagens_revide_1334")
+PDF = Path("revide_1334.pdf")
+
+PASTA.mkdir(exist_ok=True)
+
+headers = {
+    "User-Agent": "Mozilla/5.0"
+}
+
+with open(ARQUIVO_URLS, encoding="utf-8") as f:
+    urls = list(dict.fromkeys(
+        linha.strip() for linha in f if linha.strip()
+    ))
+
+imagens = []
+
+for i, url in enumerate(urls, start=1):
+    destino = PASTA / f"pagina_{i:03d}.webp"
+
+    try:
+        print(f"Baixando imagem {i}/{len(urls)}...")
+        resposta = requests.get(url, headers=headers, timeout=60)
+        resposta.raise_for_status()
+
+        destino.write_bytes(resposta.content)
+
+        with Image.open(BytesIO(resposta.content)) as img:
+            imagem = img.convert("RGB")
+            imagens.append(imagem.copy())
+            print(f"  OK: {img.width} x {img.height}")
+
+    except Exception as erro:
+        print(f"  ERRO na imagem {i}: {erro}")
+
+    time.sleep(0.2)
+
+if imagens:
+    imagens[0].save(
+        PDF,
+        save_all=True,
+        append_images=imagens[1:],
+        resolution=150
+    )
+    print(f"\nPDF criado: {PDF.resolve()}")
+    print(f"Total de páginas montadas: {len(imagens)}")
+else:
+    print("Nenhuma imagem foi baixada com sucesso.")
